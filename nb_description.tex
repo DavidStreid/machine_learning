@@ -1,0 +1,71 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+\begin{document}
+\textbf{Naive Bayes Classifier Description}
+
+A Bayes Classifier computes label assignment based of an input vector of features as the label that maximizes the class prior multiplied by the class conditional distribution. The class prior can be found rather easily as follows - 
+
+$$\Pr{[Y=y]} = \pi_y := \frac{1}{n} \sum_{i=1}^{n} 1\{y_i = y\}  $$
+
+The class conditional distribution can be estimated assuming a Bernoulli distribution for each feature $x_i$ and performing a maximum likelihood estimation for each feature separately  - 
+
+\[
+	\begin{split}
+	\Pr{[(X_1,X_2,...,X_n) = (x_1,x_2,...,x_n)  | Y=y]} &= \Pr{[X=x_1 | Y=y]} \cdot \Pr{[X=x_2 | Y=y]} \cdot ... \cdot \Pr{[X=x_n | Y=y]}
+	\end{split}
+\]
+
+
+The resulting Bayes classifier is - 
+\[
+	\begin{split}
+	f^*(x) &=
+	\\
+	&=\arg\max_{y \in Y} \Pr{[Y=y | (X_1, X_2, ..., X_n) = (x_1, x_2, ..., x_n)]} 
+	\\
+	&=\pi_y \cdot \Pr {[(X_1, X_2, ..., X_n) = (x_1, x_2, ..., x_n) | Y=y]} 
+	\\
+	&=\frac{1}{n} \sum_{i=1}^{n} 1\{y_i = y\} \cdot \Pr{[X=x_1 | Y=y]} \cdot \Pr{[X=x_2 | Y=y]} \cdot ... \cdot \Pr{[X=x_n | Y=y]} 
+	\end{split}
+\]
+
+where each $\Pr{[X_i=x_i | Y=y]}$ can be calculated, using the probability that feature $X_i$ yields value $x_i$, as follows - $$\Pr{[X=x_i | Y=y]} = p_{x_i}^{x_i} \cdot (1-p_{x_i})^{1-x_i}$$
+
+To calculate the probabilities of $p_{x_i}$, we can calculate the proportion of values of a certain feature that resulted in the classification $Y=y$ from the training set. For instance, the train\_usps data has 256 features describing pixels as binary values {0, 1}. For each label $y_i$, we calculate the proportion at each feature that results in $y_i$ as follows - 
+
+$$ p_{x_i} = \frac{\Pr{[X = x_i | Y = y_i]}}{\Pr{[X = x_i | Y = y_i]}  + \Pr{[X \neq x_i | Y = y_i]}} $$
+
+which in a binary case is essentially - 
+$$p_{x_i} = \Pr{[X = 1 | Y = y_i]}$$
+\end{document}
+
