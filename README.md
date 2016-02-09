@@ -1,0 +1,2 @@
+NAIVE BAYES CLASSIFIER
+KNN (k = 1, 3, 5) Classifier
