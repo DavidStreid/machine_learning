@@ -36,16 +36,16 @@ function tree = hw2_train_DT(train_data, depth)
 %                     min_U = min([U_Left, U_Right])
                     
                     % UNCERTAINTY NOTION II - Gini Index
-                    U_Left = (1 - (Left_Spam/Left_size)^2 - ((Left_size-Left_Spam)/Left_size)^2).*prop_left
-                    U_Right = ((1 - (Right_Spam/Right_size)^2 - ((Right_size-Right_Spam)/Right_size))^2.*prop_right)
-                    min_U = U_Left + U_Right
+%                     U_Left = (1 - (Left_Spam/Left_size)^2 - ((Left_size-Left_Spam)/Left_size)^2).*prop_left
+%                     U_Right = (1 - (Right_Spam/Right_size)^2 - ((Right_size-Right_Spam)/Right_size)^2.*prop_right)
+%                     min_U = U_Left + U_Right
                     
                     % UNCERTAINTY NOTION III - Entropy
-%                     U_Left = (log10(1./(Left_Spam/Left_size)).*(Left_Spam/Left_size)...
-%                     +log10(1./((Left_size - Left_Spam)/Left_size)).*(Left_size - Left_Spam)/Left_size).*prop_left
-%                     U_Right = (log10(1./(Right_Spam/Right_size)).*(Right_Spam/Right_size)...
-%                     +log10(1./((Right_size - Right_Spam)/Right_size)).*(Right_size - Right_Spam)/Right_size).*prop_right
-%                     min_U = U_Left + U_Right
+                    U_Left = (log10(1./(Left_Spam/Left_size)).*(Left_Spam/Left_size)...
+                    +log10(1./((Left_size - Left_Spam)/Left_size)).*(Left_size - Left_Spam)/Left_size).*prop_left
+                    U_Right = (log10(1./(Right_Spam/Right_size)).*(Right_Spam/Right_size)...
+                    +log10(1./((Right_size - Right_Spam)/Right_size)).*(Right_size - Right_Spam)/Right_size).*prop_right
+                    min_U = U_Left + U_Right
                     
                     if min_U < min_classification_error(2) %[feature, uncertainty, t_value]
                         min_classification_error = [i, min_U, f_v]
